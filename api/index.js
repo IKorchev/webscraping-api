@@ -1,7 +1,8 @@
 const express = require("express")
 const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
-const router = express.Router()
+const port = process.env.port || 8000
+const app = express()
 
 const search = async (searchTerm) => {
   const url = `https://www.parfumo.net/s_perfumes.php?lt=1&filter=${searchTerm}`
@@ -31,9 +32,9 @@ const search = async (searchTerm) => {
   }
 }
 
-router.get("/search/:searchTerm", async (req, res) => {
+app.get("/api/search/:searchTerm", async (req, res) => {
   try {
-    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate")
+    res.setHeader("Cache-Control", "s-max-age=10, stale-while-revalidate")
     const term = req.params.searchTerm
     const data = await search(term)
     res.json({ data: data })
@@ -42,4 +43,5 @@ router.get("/search/:searchTerm", async (req, res) => {
   }
 })
 
-module.exports = router
+app.listen(port, () => console.log("listening on port " + port))
+module.exports = app
