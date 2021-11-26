@@ -34,9 +34,9 @@ router.get("/:searchTerm", async (req, res) => {
   try {
     const term = req.params.searchTerm
     const data = await search(term)
-    res.json(data)
+    res.json({ data: data })
   } catch (error) {
-    res.status(500)
+    res.status(500).send({ message: "internal server error" })
   }
 })
 
