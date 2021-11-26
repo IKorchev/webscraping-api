@@ -1,4 +1,5 @@
 const express = require("express")
+const chromium = require("chrome-aws-lambda")
 const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const port = process.env.port || 8000
@@ -8,7 +9,13 @@ const search = async (searchTerm) => {
   const url = `https://www.parfumo.net/s_perfumes.php?lt=1&filter=${searchTerm}`
 
   try {
-    const browser = await puppeteer.launch()
+    const browser = await chromium.puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    })
     const page = await browser.newPage()
     const content = await page.goto(url).then(async () => page.content())
     const $ = cheerio.load(content)
