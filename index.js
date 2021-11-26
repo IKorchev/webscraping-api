@@ -1,7 +1,7 @@
 const express = require("express")
 const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
-const port = 8000
+const port = process.env.port || 8000
 const app = express()
 
 const search = async (searchTerm) => {
