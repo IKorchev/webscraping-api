@@ -13,7 +13,7 @@ const search = async (searchTerm) => {
     const $ = cheerio.load(content)
     const perfumeGrid = $(".pgrid").find(".col")
     const objects = []
-    
+
     perfumeGrid.each((i, el) => {
       const name = $(el).find(".name > a").text()
       const brand = $(el).find(".name > .brand > a").text()
@@ -31,8 +31,9 @@ const search = async (searchTerm) => {
   }
 }
 
-router.get("/:searchTerm", async (req, res) => {
+router.get("/search/:searchTerm", async (req, res) => {
   try {
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate")
     const term = req.params.searchTerm
     const data = await search(term)
     res.json({ data: data })
