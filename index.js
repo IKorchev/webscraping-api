@@ -5,4 +5,7 @@ const port = process.env.port || 8000
 const app = express()
 
 app.use("/api", search)
+
 app.listen(port, () => console.log("listening on port " + port))
+
+module.exports = app
