@@ -13,6 +13,7 @@ const search = async (searchTerm) => {
     const $ = cheerio.load(content)
     const perfumeGrid = $(".pgrid").find(".col")
     const objects = []
+    
     perfumeGrid.each((i, el) => {
       const name = $(el).find(".name > a").text()
       const brand = $(el).find(".name > .brand > a").text()
