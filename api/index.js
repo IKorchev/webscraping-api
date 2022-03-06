@@ -61,8 +61,8 @@ const search = async (searchTerm) => {
       const name = $(el).find(".name > a").text()
       const brand = $(el).find(".name > .brand > a").text()
       const imageUrl = $(el).find("img").attr("data-src")
-      const rating = $(el).find(".av_scent").text()
-      const totalVotes = $(el).find(".tv").text()
+      const rating = $(el).find(".av_scent").text().trim().split(" ")[0]
+      const totalVotes = $(el).find(".tv").text().trim()
       objects.push({
         name: `${brand} - ${name}`,
         imageUrl,
